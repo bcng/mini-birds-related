@@ -3,33 +3,38 @@ var Schema = mongoose.Schema;
 
 //add in User reference in the sighting schema
 var sightingSchema = new Schema({
+    // below looks in the User model for a given objectId
     user: {
-        type: Schema.Types.ObjectId, 
-        ref: 'User' // looks for the User model for this objectId
+        type: Schema.Types.ObjectId,
+        ref: 'User'
     },
-    name: {
-        type: String,
-        lowercase: true
-    },
-    order: {
-        type: String,
-        lowercase: true,
-        maxlength: 20
-    },
-    status: {
-        type: String,
-        lowercase: true,
-        enum: [
-            'extinct',
-            'extinct in the wild',
-            'critically endangered',
-            'endangered',
-            'vulnerable',
-            'near threatened',
-            'conservation dependent',
-            'least concern'
-        ]
-    },
+
+    //below is an example of an embedded array
+    bird: [{
+        name: {
+            type: String,
+            lowercase: true
+        },
+        order: {
+            type: String,
+            lowercase: true,
+            maxlength: 20
+        },
+        status: {
+            type: String,
+            lowercase: true,
+            enum: [
+                'extinct',
+                'extinct in the wild',
+                'critically endangered',
+                'endangered',
+                'vulnerable',
+                'near threatened',
+                'conservation dependent',
+                'least concern'
+            ]
+        }
+    }],
     confirmed: {
         type: Boolean,
         default: false
@@ -39,6 +44,8 @@ var sightingSchema = new Schema({
         min: 1
     }
 });
+
+
 
 
 module.exports = mongoose.model('Sighting', sightingSchema);
