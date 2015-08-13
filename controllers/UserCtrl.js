@@ -1,9 +1,11 @@
-var Sighting = require('../models/Sighting');
+//this User is a constructor that spits out objects
+var User = require('../models/User');
 
 module.exports = {
     create: function(req, res) {
-        var newSighting = new Sighting(req.body);
-        newSighting.save(function(err, result) {
+    	//inject the req.body to create the document 
+        var newUser = new User(req.body);
+        newUser.save(function(err, result) {
             if (err) return res.status(500).send(err);
             res.send(result);
         });
@@ -11,7 +13,7 @@ module.exports = {
 
     read: function(req, res) {
         console.log('req.query: ', req.query);
-        Sighting.find(req.query)
+        User.find(req.query)
             .exec(function(err, result) {
                 if (err) return res.status(500).send(err);
                 res.send(result);
@@ -19,14 +21,14 @@ module.exports = {
     },
 
     update: function(req, res) {
-        Sighting.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
+        User.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
             if (err) return res.status(500).send(err);
             res.send(result);
         });
     },
 
     delete: function(req, res) {
-        Sighting.findByIdAndRemove(req.params.id, function(err, result) {
+        User.findByIdAndRemove(req.params.id, function(err, result) {
             if (err) return res.status(500).send(err);
             res.send(result);
         });

@@ -26,9 +26,9 @@ var mongoUri = 'mongodb://localhost:27017/mini-birds-mongoose';
 
 mongoose.connect(mongoUri);
 mongoose.connection.once('open', function() {
-  console.log('Connected to MongoDB at ', mongoUri);
+    console.log('Connected to MongoDB at ', mongoUri);
 });
 
 app.listen(port, function() {
-  console.log('Listening on port ', port);
+    console.log('Listening on port ', port);
 });
