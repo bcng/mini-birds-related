@@ -12,6 +12,7 @@ module.exports = {
     read: function(req, res) {
         console.log('req.query: ', req.query);
         Sighting.find(req.query)
+            .populate('user') //this adds the information contained within the user object into the JSON
             .exec(function(err, result) {
                 if (err) return res.status(500).send(err);
                 res.send(result);

@@ -1,4 +1,5 @@
-//this User is a constructor that spits out objects
+//This User is a constructor that spits out objects
+//It is also a reference for the users collection in Mongo, as seen in the read function
 var User = require('../models/User');
 
 module.exports = {
@@ -13,6 +14,9 @@ module.exports = {
 
     read: function(req, res) {
         console.log('req.query: ', req.query);
+        // uncommented code does below
+        // query = User.find(req.query) - create query object
+        // query.exec() - then returns a document on that object
         User.find(req.query)
             .exec(function(err, result) {
                 if (err) return res.status(500).send(err);
