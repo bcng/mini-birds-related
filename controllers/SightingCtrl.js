@@ -11,8 +11,15 @@ module.exports = {
 
     read: function(req, res) {
         console.log('req.query: ', req.query);
-        Sighting.find(req.query)
-            .populate('user') //this adds the information contained within the user object into the JSON
+        // Search all
+        Sighting.find(req.body)
+
+        // Search for a specific embedded bird
+        // Sighting.find({"bird.name": "cedar waxwing"})
+
+        // Search via conditions/query operators
+        // Sighting.find({"numberSeen": { '$gt': 3}})
+        .populate('user') //this adds the information contained within the user object into the JSON
             .exec(function(err, result) {
                 if (err) return res.status(500).send(err);
                 res.send(result);
@@ -20,10 +27,20 @@ module.exports = {
     },
 
     update: function(req, res) {
-        Sighting.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
-            if (err) return res.status(500).send(err);
-            res.send(result);
-        });
+        // update with id and req.body (single obj)
+        // Sighting.findByIdAndUpdate(req.params.id, req.body, function(err, result) {
+
+        // push another bird onto an existing sighting document
+        Sighting.findByIdAndUpdate(
+            req.params.id, {
+                $push: {
+                    bird: req.body
+                }
+            },
+            function(err, result) {
+                if (err) return res.status(500).send(err);
+                res.send(result);
+            });
     },
 
     delete: function(req, res) {

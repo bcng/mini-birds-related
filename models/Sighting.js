@@ -9,7 +9,7 @@ var sightingSchema = new Schema({
         ref: 'User'
     },
 
-    //below is an example of an embedded array
+    //allow user to post multiple bird documents in one POST 
     bird: [{
         name: {
             type: String,
@@ -44,8 +44,5 @@ var sightingSchema = new Schema({
         min: 1
     }
 });
-
-
-
 
 module.exports = mongoose.model('Sighting', sightingSchema);
